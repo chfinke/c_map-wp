@@ -1,2 +1,2 @@
 # wp-crowdmap
-WordPress  plugin for a crowd sourced map
+WordPress  plugin for a crowdsourced map
