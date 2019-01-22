@@ -74,4 +74,53 @@ function publish($id) {
     }
 }
 
+function get_delta( $id_new, $wpdb ) {
+    $sql = "
+        SELECT * 
+            FROM $wpdb->posts p
+            WHERE p.post_type='crowdmap' 
+              AND p.ID = '$id_new'
+        ";
+    $post_new = reset($wpdb->get_results( $sql ));
+
+    $metas_new = $wpdb->get_results( "
+        SELECT * 
+            FROM $wpdb->postmeta 
+            WHERE $wpdb->postmeta.post_id = $id_new
+        " );
+    $meta_dict_new = get_meta_dict( $metas_new );
+    
+    
+    $id_old = $meta_dict_new["id_publish"];
+    if ($id_old > 0) {
+        $sql = "
+            SELECT * 
+                FROM $wpdb->posts p
+                WHERE p.post_type='crowdmap' 
+                  AND p.ID = '$id_old'
+            ";
+        $post_old = reset($wpdb->get_results( $sql ));
+
+        $metas_old = $wpdb->get_results( "
+            SELECT * 
+                FROM $wpdb->postmeta 
+                WHERE $wpdb->postmeta.post_id = $id_old
+            " );
+        $meta_dict_old = get_meta_dict( $metas_old );
+    }
+    
+    $s = "";
+    if ($id_old > 0) {
+        if ($meta_dict_new["address"] == $meta_dict_old["address"]) {
+            $s .= "<div class='plain'>".$meta_dict_new["address"]."</div>\n";
+        } else {
+            $s .= "<div class='old'>".$meta_dict_old["address"]."</div>\n";
+            $s .= "<div class='new'>".$meta_dict_new["address"]."</div>\n";
+        }
+    } else {
+        $s .= "<div class='new'>".$meta_dict_new["address"]."</div>\n";
+    }
+    return $s;
+}
+
 ?>

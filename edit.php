@@ -111,7 +111,7 @@
         Adresse: <input required="yes" type="text" id="address" name="address" value="<?php echo $address ?>" /><br />
         
         Position:
-        <iframe src="/crowdmap/edit_map?lat=<?php echo $lat ?>&lon=<?php echo $lon ?>" height="350px" width="100%"></iframe>
+        <iframe src="<?php echo get_bloginfo('wpurl'); ?>/crowdmap/edit_map?lat=<?php echo $lat ?>&lon=<?php echo $lon ?>" height="350px" width="100%"></iframe>
         
         <input type="hidden" id="lat" name="lat" value="<?php echo $lat ?>" />
         <input type="hidden" id="lon" name="lon" value="<?php echo $lon ?>" />

@@ -28,6 +28,15 @@
 			width: 100%;
 			height: 100%;
 		}
+<?php
+if (user_is_moderator()) {
+?>
+        .plain { margin: 0; padding: 0; color: black; }
+        .old { margin: 0; padding: 0; color: red; }
+        .new { margin: 0; padding: 0; color: green; }
+<?php
+}
+?>
 	</style>	
 </head>
 <body>
@@ -52,11 +61,16 @@
             var datalayer = L.geoJson(data ,{
                 onEachFeature: function(feature, featureLayer) {
                     var text = '<b>'+feature.properties.title+'</b>';
+<?php
+    if( !user_is_moderator()) {
+?>
                     text += '<br/>'+feature.properties.address;
 <?php
-    if( user_is_moderator()) {
+    } else {
 ?>
-                    text += '<br><a href="<?php echo get_bloginfo('wpurl'); ?>/crowdmap/edit?id='+feature.properties.id+'">bearbeiten</a>';
+                    text += '<br/>'+feature.properties.delta;
+                    
+                    text += '<a href="<?php echo get_bloginfo('wpurl'); ?>/crowdmap/edit?id='+feature.properties.id+'">bearbeiten</a>';
                     if (feature.properties.status == 'pending') {
                         text += '<br><a href="<?php echo get_bloginfo('wpurl'); ?>/crowdmap/functions?action=publish&id='+feature.properties.id+'">bestätigen</a>';
                     }
@@ -100,7 +114,13 @@
         });      
             
 <?php
-    if ( !user_is_moderator()) {
+    if ( user_is_moderator()) {
+?>
+        L.easyButton( 'fa-list-ul', function(){
+            document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/crowdmap/list' 
+        }).addTo(map);
+<?php
+    } else {
 ?>
         L.easyButton( 'fa-pencil', function(){
             document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/crowdmap/edit' 

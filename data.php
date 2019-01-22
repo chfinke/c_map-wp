@@ -62,6 +62,9 @@
         if ( user_is_moderator() ) {
             echo sprintf("        \"status\": \"%s\",\n", $post->status);
             echo sprintf("        \"active\": \"%s\",\n", $post->active);
+            echo "        \"delta\": \"";
+            echo preg_replace("/\r|\n/", "", get_delta($post->ID , $wpdb ));
+            echo "\",\n";
         }
         echo sprintf("        \"address\": \"%s\"\n", $meta_dict["address"]);
         echo "      }\n";

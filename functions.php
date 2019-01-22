@@ -1,11 +1,17 @@
 <?php
     require_once( explode( "wp-content" , __FILE__ )[0] . "wp-load.php" );
     require_once( "./helpers.php" );
-    get_header();
+    
+    $action = $_GET['action'];
+
+    $plain = isset($_GET['plain']);
+    
+    if (!$plain) {
+        get_header();
 ?>
 <div style="padding-left: 1em; padding-right: 1em;">
-
 <?php
+    }
     $action = $_GET['action'];
 
     if ( $action == 'publish') {
@@ -21,6 +27,7 @@
     <p>Erfolgreich bestätigt</p>
         
     <input type="button" value="Zurück" onclick="document.location.href='<?php echo get_bloginfo('wpurl'); ?>/crowdmap/';"/>
+    
 <?php
         } else {
             echo "Falsche Zugangsdaten oder Status";
@@ -133,7 +140,7 @@
         $id = $_GET['id'];
         $token = $_GET["token"];
         
-        if ( check_token($id, $token) || custom_is_moderator()) {
+        if ( check_token($id, $token) || user_is_moderator()) {
             
             if (isset($_GET['confirmed'])) {
                 wp_delete_post( get_post_meta($id,"id_publish",true), true );
@@ -156,10 +163,12 @@
         }
     }
     
+    if (!$plain) {
 ?>
 </div>
 <?php
-    get_footer();
+        get_footer();
+    }
 ?>
 
 

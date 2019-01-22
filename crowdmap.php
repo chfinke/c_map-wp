@@ -78,6 +78,7 @@ function crowdmap_plu_rewrite() {
 	add_rewrite_rule( 'crowdmap/functions/?$', 'wp-content/plugins' . '/crowdmap/functions.php', 'top' );
 	add_rewrite_rule( 'crowdmap/edit/?$', 'wp-content/plugins' . '/crowdmap/edit.php', 'top' );
     add_rewrite_rule( 'crowdmap/edit_map/?$', 'wp-content/plugins' . '/crowdmap/edit_map.php', 'top' );
+    add_rewrite_rule( 'crowdmap/list/?$', 'wp-content/plugins' . '/crowdmap/list.php', 'top' );
 }
 
 add_action( 'init', 'crowdmap_plu_rewrite' );
