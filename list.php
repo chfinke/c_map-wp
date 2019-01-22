@@ -31,7 +31,7 @@
                 LEFT OUTER JOIN $wpdb->postmeta ma 
                   ON    ma.post_id = mp.meta_value
                     AND ma.meta_key='status'
-                WHERE p.post_type='crowdmap' 
+                WHERE p.post_type='c_map' 
                   AND p.post_status='draft'
                   AND ms.meta_value in ( 'unconfirmed', 'pending', 'publish' )
             ";
@@ -56,12 +56,12 @@
             <div class="entry-content">
                 <?php echo get_delta($post->ID, $wpdb, "\n"); ?>
                 <p>
-                    <a href="<?php echo get_bloginfo('wpurl')."/crowdmap/edit?id=".$post->ID; ?>">bearbeiten</a>
+                    <a href="<?php echo get_bloginfo('wpurl')."/c_map/edit?id=".$post->ID; ?>">bearbeiten</a>
 <?php
             if ($meta_dict["status"] == 'pending') {
 ?>
                     &nbsp;&nbsp;•&nbsp;&nbsp;
-                    <a href="<?php echo get_bloginfo('wpurl')."/crowdmap/functions?action=publish&id=".$post->ID; ?>">bestätigen</a>
+                    <a href="<?php echo get_bloginfo('wpurl')."/c_map/functions?action=publish&id=".$post->ID; ?>">bestätigen</a>
 <?php
             }
 ?>
@@ -72,7 +72,7 @@
         }
 ?>
         <br/>
-        <input type="button" value="Zurück" onclick="window.location.href='<?php echo get_bloginfo('wpurl'); ?>/crowdmap'"/>
+        <input type="button" value="Zurück" onclick="window.location.href='<?php echo get_bloginfo('wpurl'); ?>/c_map'"/>
     </div>
 
 <?php

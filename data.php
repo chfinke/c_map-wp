@@ -15,7 +15,7 @@
                 LEFT OUTER JOIN $wpdb->postmeta ma 
                   ON    ma.post_id = mp.meta_value
                     AND ma.meta_key='status'
-                WHERE p.post_type='crowdmap' 
+                WHERE p.post_type='c_map' 
                   AND p.post_status='draft'
                   AND ms.meta_value in ( 'unconfirmed', 'pending', 'publish' )
             ";
@@ -26,7 +26,7 @@
                 LEFT OUTER JOIN $wpdb->postmeta ms 
                   ON    ms.post_id = p.ID
                     AND ms.meta_key='status'
-                WHERE p.post_type='crowdmap' 
+                WHERE p.post_type='c_map' 
                   AND p.post_status='publish'
                   AND ms.meta_value = 'active'
             ";

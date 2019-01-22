@@ -57,7 +57,7 @@ if (user_is_moderator()) {
             }
         ).addTo(map);
 
-        $.getJSON("<?php echo get_bloginfo('wpurl'); ?>/crowdmap/data.json",function(data){
+        $.getJSON("<?php echo get_bloginfo('wpurl'); ?>/c_map/data.json",function(data){
             var datalayer = L.geoJson(data ,{
                 onEachFeature: function(feature, featureLayer) {
                     var text = '<b>'+feature.properties.title+'</b>';
@@ -70,9 +70,9 @@ if (user_is_moderator()) {
 ?>
                     text += '<br/>'+feature.properties.delta;
                     
-                    text += '<a href="<?php echo get_bloginfo('wpurl'); ?>/crowdmap/edit?id='+feature.properties.id+'">bearbeiten</a>';
+                    text += '<a href="<?php echo get_bloginfo('wpurl'); ?>/c_map/edit?id='+feature.properties.id+'">bearbeiten</a>';
                     if (feature.properties.status == 'pending') {
-                        text += '<br><a href="<?php echo get_bloginfo('wpurl'); ?>/crowdmap/functions?action=publish&id='+feature.properties.id+'">bestätigen</a>';
+                        text += '<br><a href="<?php echo get_bloginfo('wpurl'); ?>/c_map/functions?action=publish&id='+feature.properties.id+'">bestätigen</a>';
                     }
 <?php
     }
@@ -117,16 +117,16 @@ if (user_is_moderator()) {
     if ( user_is_moderator()) {
 ?>
         L.easyButton( 'fa-list-ul', function(){
-            document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/crowdmap/list' 
+            document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/c_map/list' 
         }).addTo(map);
 <?php
     } else {
 ?>
         L.easyButton( 'fa-pencil', function(){
-            document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/crowdmap/edit' 
+            document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/c_map/edit' 
         }).addTo(map);
         L.easyButton( 'fa-plus-square', function(){
-            document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/crowdmap/edit?action=new'
+            document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/c_map/edit?action=new'
         }).addTo(map);
 <?php
     }

@@ -50,7 +50,7 @@ function publish($id) {
                 'post_name'	     => '',
                 'post_title'     => '',
                 'post_status'    => 'publish',
-                'post_type'      => 'crowdmap',
+                'post_type'      => 'c_map',
             )
         );
         update_post_meta( $id, 'id_publish', $id_publish);
@@ -78,7 +78,7 @@ function get_delta( $id_new, $wpdb ) {
     $sql = "
         SELECT * 
             FROM $wpdb->posts p
-            WHERE p.post_type='crowdmap' 
+            WHERE p.post_type='c_map' 
               AND p.ID = '$id_new'
         ";
     $post_new = reset($wpdb->get_results( $sql ));
@@ -96,7 +96,7 @@ function get_delta( $id_new, $wpdb ) {
         $sql = "
             SELECT * 
                 FROM $wpdb->posts p
-                WHERE p.post_type='crowdmap' 
+                WHERE p.post_type='c_map' 
                   AND p.ID = '$id_old'
             ";
         $post_old = reset($wpdb->get_results( $sql ));

@@ -26,7 +26,7 @@
 ?>
     <p>Erfolgreich bestätigt</p>
         
-    <input type="button" value="Zurück" onclick="document.location.href='<?php echo get_bloginfo('wpurl'); ?>/crowdmap/';"/>
+    <input type="button" value="Zurück" onclick="document.location.href='<?php echo get_bloginfo('wpurl'); ?>/c_map/';"/>
     
 <?php
         } else {
@@ -54,7 +54,7 @@
                         'post_name'	     => '',
                         'post_title'     => $_POST["title"],
                         'post_status'    => 'draft',
-                        'post_type'      => 'crowdmap',
+                        'post_type'      => 'c_map',
                     )
                 );
                 // TODO custom create post
@@ -82,7 +82,7 @@
                 $subject = 'Bestätige deinen Karteneintrag auf '.get_bloginfo('name');
                 $body = 'Hallo,<br/>du hast einen neuen Karteneinträge auf '.get_bloginfo('name').' gemacht.<br/>
                 Zur Bestätigung klicke bitte auf diesen Link:<br/>
-                <a href="'.get_bloginfo('wpurl').'/crowdmap/functions?action=confirm&id='.$id.'&token='.$token.'">'.get_bloginfo('wpurl').'/crowdmap/confirm?id='.$id.'&token='.$token.'</a>';
+                <a href="'.get_bloginfo('wpurl').'/c_map/functions?action=confirm&id='.$id.'&token='.$token.'">'.get_bloginfo('wpurl').'/c_map/confirm?id='.$id.'&token='.$token.'</a>';
                 $headers = array('Content-Type: text/html; charset=UTF-8');
          
                 wp_mail( $email, $subject, $body, $headers );
@@ -104,7 +104,7 @@
                 }
 ?>
     <p>Eintrag geändert</p>
-    <input type="button" value="anzeigen" onclick="window.location.href='<?php echo get_bloginfo('wpurl'); ?>/crowdmap/'"/>
+    <input type="button" value="anzeigen" onclick="window.location.href='<?php echo get_bloginfo('wpurl'); ?>/c_map/'"/>
     <input type="button" value="Zurück" onclick="window.history.go(-1);"/>
 <?php
             }
@@ -126,8 +126,8 @@
 ?>
         <p>Erfolgreich bestätigt</p>
         
-        <input type="button" value="bearbeiten" onclick="window.location.href='<?php echo get_bloginfo('wpurl'); ?>/crowdmap/edit?id=<?php echo $id; ?>&token=<?php echo $token; ?>'"/>
-        <input type="button" value="anzeigen" onclick="window.location.href='<?php echo get_bloginfo('wpurl'); ?>/crowdmap/'"/>
+        <input type="button" value="bearbeiten" onclick="window.location.href='<?php echo get_bloginfo('wpurl'); ?>/c_map/edit?id=<?php echo $id; ?>&token=<?php echo $token; ?>'"/>
+        <input type="button" value="anzeigen" onclick="window.location.href='<?php echo get_bloginfo('wpurl'); ?>/c_map/'"/>
 <?php
         } else {
             echo "Falsche Zugangsdaten oder Status";
@@ -152,7 +152,7 @@
 ?>
     <p>Eintrag wirklich löschen?</p>
     
-    <input type="button" value="Löschen" onclick="window.location.href='<?php echo get_bloginfo('wpurl'); ?>/crowdmap/functions?action=delete&id=<?php echo $_GET['id']; ?>&confirmed&token=<?php echo $_GET['token']; ?>'"/>
+    <input type="button" value="Löschen" onclick="window.location.href='<?php echo get_bloginfo('wpurl'); ?>/c_map/functions?action=delete&id=<?php echo $_GET['id']; ?>&confirmed&token=<?php echo $_GET['token']; ?>'"/>
     <input type="button" value="Zurück" onclick="window.history.go(-1);"/>
 <?php
             }
