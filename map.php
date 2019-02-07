@@ -10,14 +10,14 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="../resources/leaflet/leaflet.css" />
-    <link rel="stylesheet" href="../resources/fontawesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="../resources/leaflet.awesome-markers/leaflet.awesome-markers.css" />
-    <link rel="stylesheet" href="../resources/leaflet.EasyButton/easy-button.css" />
-    <script src="../resources/jquery/jquery-3.3.1.min.js"></script>
-    <script src="../resources/leaflet/leaflet.js"></script> 
-    <script src="../resources/leaflet.awesome-markers/leaflet.awesome-markers.min.js"></script>
-    <script src="../resources/leaflet.EasyButton/easy-button.js"></script> 
+    <link rel="stylesheet" href="../cmap-resources/leaflet/leaflet.css" />
+    <link rel="stylesheet" href="../cmap-resources/fontawesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../cmap-resources/leaflet.awesome-markers/leaflet.awesome-markers.css" />
+    <link rel="stylesheet" href="../cmap-resources/leaflet.EasyButton/easy-button.css" />
+    <script src="../cmap-resources/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../cmap-resources/leaflet/leaflet.js"></script> 
+    <script src="../cmap-resources/leaflet.awesome-markers/leaflet.awesome-markers.min.js"></script>
+    <script src="../cmap-resources/leaflet.EasyButton/easy-button.js"></script> 
     
 	<style>
 		html, body {
@@ -57,7 +57,7 @@ if (user_is_moderator()) {
             }
         ).addTo(map);
 
-        $.getJSON("<?php echo get_bloginfo('wpurl'); ?>/c_map/data.json",function(data){
+        $.getJSON("<?php echo get_bloginfo('wpurl'); ?>/cmap/data.json",function(data){
             var datalayer = L.geoJson(data ,{
                 onEachFeature: function(feature, featureLayer) {
                     var text = '<b>'+feature.properties.title+'</b>';
@@ -70,9 +70,9 @@ if (user_is_moderator()) {
 ?>
                     text += '<br/>'+feature.properties.delta;
                     
-                    text += '<a href="<?php echo get_bloginfo('wpurl'); ?>/c_map/edit?id='+feature.properties.id+'">bearbeiten</a>';
+                    text += '<a href="<?php echo get_bloginfo('wpurl'); ?>/cmap/edit?id='+feature.properties.id+'">bearbeiten</a>';
                     if (feature.properties.status == 'pending') {
-                        text += '<br><a href="<?php echo get_bloginfo('wpurl'); ?>/c_map/functions?action=publish&id='+feature.properties.id+'">bestätigen</a>';
+                        text += '<br><a href="<?php echo get_bloginfo('wpurl'); ?>/cmap/functions?action=publish&id='+feature.properties.id+'">bestätigen</a>';
                     }
 <?php
     }
@@ -117,16 +117,16 @@ if (user_is_moderator()) {
     if ( user_is_moderator()) {
 ?>
         L.easyButton( 'fa-list-ul', function(){
-            document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/c_map/list' 
+            document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/cmap/list' 
         }).addTo(map);
 <?php
     } else {
 ?>
         L.easyButton( 'fa-pencil', function(){
-            document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/c_map/edit' 
+            document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/cmap/edit' 
         }).addTo(map);
         L.easyButton( 'fa-plus-square', function(){
-            document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/c_map/edit?action=new'
+            document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/cmap/edit?action=new'
         }).addTo(map);
 <?php
     }

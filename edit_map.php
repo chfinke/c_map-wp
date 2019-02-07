@@ -10,9 +10,9 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="../resources/leaflet/leaflet.css" />
-    <script src="../resources/leaflet/leaflet.js"></script> 
-    <script src="../resources/jquery/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="../cmap-resources/leaflet/leaflet.css" />
+    <script src="../cmap-resources/leaflet/leaflet.js"></script> 
+    <script src="../cmap-resources/jquery/jquery-3.3.1.min.js"></script>
 
 	<style>
 		html, body {

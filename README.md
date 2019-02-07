@@ -1,2 +1,2 @@
-# c_map-wp
+# cmap-wp
 WordPress  plugin for a crowdsourced/cooperative map

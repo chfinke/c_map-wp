@@ -20,7 +20,7 @@
         if ($email == "") {
 ?>
     Links zu den eigenen Einträgen werden per E-Mail verschickt:
-    <form name="data" method="POST" onsubmit="return form_validation()" action="<?php echo get_bloginfo('wpurl'); ?>/c_map/edit">
+    <form name="data" method="POST" onsubmit="return form_validation()" action="<?php echo get_bloginfo('wpurl'); ?>/cmap/edit">
         <input type="text" id="email" name="email"/><br />    
         <input type="submit" value="Anfragen"/>
         <input type="button" value="Zurück" onclick="window.history.back();"/>
@@ -46,7 +46,7 @@
                     INNER JOIN $wpdb->postmeta mm 
                       ON    mm.post_id = p.ID
                         AND mm.meta_key='email'
-                    WHERE p.post_type='c_map'
+                    WHERE p.post_type='cmap'
                       AND post_status='draft'
                       AND ms.meta_value in ('unconfirmed', 'pending', 'publish')
                       AND mm.meta_value='".$email."'
@@ -58,7 +58,7 @@
                 $body = 'Hallo,<br/>du hast folgende Karteneinträge auf '.get_bloginfo('name').' gemacht.<br/>Zum Ändern bitte folgende Links anklicken:<ul>';
                 foreach ( $posts as $post ) {
                     $token = set_token($post->ID);
-                    $body .= "<li><a href=\"".get_bloginfo('wpurl')."/c_map/edit?id=".$post->ID."&token=".$token."\">".$post->post_title."</a></li>";
+                    $body .= "<li><a href=\"".get_bloginfo('wpurl')."/cmap/edit?id=".$post->ID."&token=".$token."\">".$post->post_title."</a></li>";
                 }
                 $body .= '</ul>';
                 $headers = array('Content-Type: text/html; charset=UTF-8');
@@ -98,7 +98,7 @@
 
         if ( (isset($status)&&$status == 'create') || user_is_moderator() || ( check_token($id, $token) && get_post_meta( $id, 'status', true) != "unconfirmed" ) ) {
 ?>
-    <form name="data" method="POST" onsubmit="return form_validation()" action="<?php echo get_bloginfo('wpurl'); ?>/c_map/functions?action=save">
+    <form name="data" method="POST" onsubmit="return form_validation()" action="<?php echo get_bloginfo('wpurl'); ?>/cmap/functions?action=save">
         <input type="hidden" name="id" value="<?php echo $id ?>">
 <?php
             if ($status == 'edit') {
@@ -111,7 +111,7 @@
         Adresse: <input required="yes" type="text" id="address" name="address" value="<?php echo $address ?>" /><br />
         
         Position:
-        <iframe src="<?php echo get_bloginfo('wpurl'); ?>/c_map/edit_map?lat=<?php echo $lat ?>&lon=<?php echo $lon ?>" height="350px" width="100%"></iframe>
+        <iframe src="<?php echo get_bloginfo('wpurl'); ?>/cmap/edit_map?lat=<?php echo $lat ?>&lon=<?php echo $lon ?>" height="350px" width="100%"></iframe>
         
         <input type="hidden" id="lat" name="lat" value="<?php echo $lat ?>" />
         <input type="hidden" id="lon" name="lon" value="<?php echo $lon ?>" />
@@ -158,7 +158,7 @@
                     }
 ?>
         <input type="submit" value="Ändern"/>
-        <input type="button" value="Löschen" onclick="window.location.href='<?php echo get_bloginfo('wpurl'); ?>/c_map/functions?action=delete&id=<?php echo $id; ?>&token=<?php echo $token; ?>'"/>
+        <input type="button" value="Löschen" onclick="window.location.href='<?php echo get_bloginfo('wpurl'); ?>/cmap/functions?action=delete&id=<?php echo $id; ?>&token=<?php echo $token; ?>'"/>
 <?php
                 } else {
 ?>
@@ -171,7 +171,7 @@
         
     </form>
   
-    <script src="../resources/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../cmap-resources/jquery/jquery-3.3.1.min.js"></script>
     
     <script type="text/javascript">
         window.onmessage = function(e){
