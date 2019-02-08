@@ -16,6 +16,58 @@
     if (user_is_moderator()) {
 ?>
     <div class="entry-content">
+        <h2 class="page-title">Übersicht</h2>
+
+<?php
+        $sql = "
+            SELECT ms.meta_value AS status, ma.meta_value AS active, count(*) AS cnt
+                FROM $wpdb->posts p
+                LEFT OUTER JOIN $wpdb->postmeta ms 
+                  ON    ms.post_id = p.ID
+                    AND ms.meta_key='status'
+                LEFT OUTER JOIN $wpdb->postmeta mp 
+                  ON    mp.post_id = p.ID
+                    AND mp.meta_key='id_publish'
+                LEFT OUTER JOIN $wpdb->postmeta ma 
+                  ON    ma.post_id = mp.meta_value
+                    AND ma.meta_key='status'
+                WHERE p.post_type='cmap' 
+                  AND p.post_status='draft'
+                  AND ms.meta_value in ( 'unconfirmed', 'pending', 'publish' )
+                GROUP BY ms.meta_value, ma.meta_value
+            ";
+        $lines = $wpdb->get_results( $sql );
+?>
+        <table>
+<?php
+        foreach ( $lines as $line ) {
+?>
+          <tr>
+            <td align="right"><?php echo $line->cnt; ?></td>
+            <td>
+<?php
+          switch ($line->status) {
+            case 'unconfirmed':
+                echo 'E-Mail nicht bestätigt';
+                break;
+            case 'pending':
+                echo 'wartet auf Freigabe';
+                break;
+            case 'publish':
+                echo 'veröffentlicht';
+                break;
+          }
+          if ($line->status!= 'unconfirmed' && $line->active != 'active') {
+            echo " inaktiv";
+          }
+?>
+            </td>
+          </tr>
+<?php
+        }
+?>
+        </table>
+
         <h2 class="page-title">offene Karteneinträge</h2>
     
 <?php
