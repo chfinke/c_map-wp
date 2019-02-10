@@ -8,7 +8,7 @@
 <?php
     $id = $_GET["id"];
     $action = $_GET["action"];
-    
+
     if (!isset($id) && !isset($action)) {
         // edit
 ?>
@@ -21,13 +21,13 @@
 ?>
     Links zu den eigenen Einträgen werden per E-Mail verschickt:
     <form name="data" method="POST" onsubmit="return form_validation()" action="<?php echo get_bloginfo('wpurl'); ?>/cmap/edit">
-        <input type="text" id="email" name="email"/><br />    
+        <input type="text" id="email" name="email"/><br />
         <input type="submit" value="Anfragen"/>
         <input type="button" value="Zurück" onclick="window.history.back();"/>
     </form>
 
     <script type="text/javascript">
-            
+
         function form_validation() {
             var email = document.forms["data"]["email"].value;
             if (email == "" || email == null) {
@@ -38,12 +38,12 @@
 <?php
         } else {
             $posts = $wpdb->get_results( "
-                SELECT distinct p.post_title, p.ID                
+                SELECT distinct p.post_title, p.ID
                     FROM $wpdb->posts p
-                    INNER JOIN $wpdb->postmeta ms 
+                    INNER JOIN $wpdb->postmeta ms
                       ON    ms.post_id = p.ID
                         AND ms.meta_key='status'
-                    INNER JOIN $wpdb->postmeta mm 
+                    INNER JOIN $wpdb->postmeta mm
                       ON    mm.post_id = p.ID
                         AND mm.meta_key='email'
                     WHERE p.post_type='cmap'
@@ -52,7 +52,7 @@
                       AND mm.meta_value='".$email."'
                 " );
             $cnt = count($posts);
-            
+
             if ($cnt>0){
                 $subject = 'Deine Karteneinträge auf '.get_bloginfo('name');
                 $body = 'Hallo,<br/>du hast folgende Karteneinträge auf '.get_bloginfo('name').' gemacht.<br/>Zum Ändern bitte folgende Links anklicken:<ul>';
@@ -62,7 +62,7 @@
                 }
                 $body .= '</ul>';
                 $headers = array('Content-Type: text/html; charset=UTF-8');
-         
+
                 wp_mail( $email, $subject, $body, $headers );
             }
 ?>
@@ -70,7 +70,7 @@
     <input type="button" value="Zurück" onclick="window.history.go(-2);"/>
 <?php
         }
-        
+
     } elseif (isset($id) || $action == 'new') {
         // edit?id=123
         // edit?action=new
@@ -82,7 +82,7 @@
             $id = $_GET['id'];
             $status = 'edit';
             $post = get_post( $id );
-            
+
             $title = $post->post_title;
             $address = get_post_meta($id,"address",true);
             $lat = get_post_meta($id,"lat",true);
@@ -122,19 +122,19 @@
 ?>
         Beschreibung: <input required="yes" type="text" id="title" name="title" value="<?php echo $title ?>" /><br />
         Adresse: <input required="yes" type="text" id="address" name="address" value="<?php echo $address ?>" /><br />
-        
+
         Position:
         <iframe src="<?php echo get_bloginfo('wpurl'); ?>/cmap/edit_map?lat=<?php echo $lat ?>&lon=<?php echo $lon ?>" height="350px" width="100%"></iframe>
-        
+
         <input type="hidden" id="lat" name="lat" value="<?php echo $lat ?>" />
         <input type="hidden" id="lon" name="lon" value="<?php echo $lon ?>" />
 
-<?php            
+<?php
             if (isset($status)&&$status == 'create') {
 ?>
         E-Mail: <input required="yes" type="text" id="email" name="email"/><br />
 <?php
-            }    
+            }
             if( user_is_moderator()) {
                 if( get_post_meta($id,"status",true) == "unconfirmed" ) {
 ?>
@@ -159,7 +159,7 @@
 ?>
         <br/>
         <input type="submit" value="Ändern"/>
-<?php        
+<?php
             } else {
 ?>
 <?php
@@ -186,16 +186,16 @@
             }
 ?>
     </form>
-  
+
     <script src="../cmap-resources/jquery/jquery-3.3.1.min.js"></script>
-    
+
     <script type="text/javascript">
         window.onmessage = function(e){
             $("#lat").val(e.data.lat);
             $("#lon").val(e.data.lng);
         };
-        
-        function form_validation() {            
+
+        function form_validation() {
         }
     </script>
 <?php

@@ -7,27 +7,27 @@
 ?>
     <title><?php echo get_bloginfo('name'); ?> &#8211; Karte</title>
 
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="../cmap-resources/leaflet/leaflet.css" />
     <link rel="stylesheet" href="../cmap-resources/fontawesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="../cmap-resources/leaflet.awesome-markers/leaflet.awesome-markers.css" />
     <link rel="stylesheet" href="../cmap-resources/leaflet.EasyButton/easy-button.css" />
     <script src="../cmap-resources/jquery/jquery-3.3.1.min.js"></script>
-    <script src="../cmap-resources/leaflet/leaflet.js"></script> 
+    <script src="../cmap-resources/leaflet/leaflet.js"></script>
     <script src="../cmap-resources/leaflet.awesome-markers/leaflet.awesome-markers.min.js"></script>
-    <script src="../cmap-resources/leaflet.EasyButton/easy-button.js"></script> 
-    
-	<style>
-		html, body {
-			height: 100%;
-			margin: 0;
-		}
-		#map {
-			width: 100%;
-			height: 100%;
-		}
+    <script src="../cmap-resources/leaflet.EasyButton/easy-button.js"></script>
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+        }
 <?php
 if (user_is_moderator()) {
 ?>
@@ -37,7 +37,7 @@ if (user_is_moderator()) {
 <?php
 }
 ?>
-	</style>	
+    </style>
 </head>
 <body>
     <div id='map'></div>
@@ -69,7 +69,7 @@ if (user_is_moderator()) {
     } else {
 ?>
                     text += '<br/>'+feature.properties.delta;
-                    
+
                     text += '<a href="<?php echo get_bloginfo('wpurl'); ?>/cmap/edit?id='+feature.properties.id+'">bearbeiten</a>';
                     if (feature.properties.status == 'pending') {
                         text += '<br><a href="<?php echo get_bloginfo('wpurl'); ?>/cmap/functions?action=publish&id='+feature.properties.id+'">bestätigen</a>';
@@ -79,7 +79,7 @@ if (user_is_moderator()) {
 ?>
                     featureLayer.bindPopup(text);
                 },
-                
+
                 pointToLayer: function(feature, latlng) {
 <?php
     if (user_is_moderator()) {
@@ -100,7 +100,7 @@ if (user_is_moderator()) {
                             break;
                         default:
                             return L.marker(latlng, {icon: L.AwesomeMarkers.icon({icon: '', markerColor: 'pink', prefix: 'fa', iconColor: 'black'}) });
-                    } 
+                    }
 <?php
     } else {
 ?>
@@ -111,19 +111,19 @@ if (user_is_moderator()) {
                 }
             }).addTo(map);
             map.fitBounds(datalayer.getBounds());
-        });      
-            
+        });
+
 <?php
     if ( user_is_moderator()) {
 ?>
         L.easyButton( 'fa-list-ul', function(){
-            document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/cmap/list' 
+            document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/cmap/list'
         }).addTo(map);
 <?php
     } else {
 ?>
         L.easyButton( 'fa-pencil', function(){
-            document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/cmap/edit' 
+            document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/cmap/edit'
         }).addTo(map);
         L.easyButton( 'fa-plus-square', function(){
             document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/cmap/edit?action=new'

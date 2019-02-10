@@ -38,7 +38,7 @@ function publish($id) {
     if ( !user_is_moderator() || get_post_meta( $id, 'status', true) != "pending" ) {
         exit();
     }
-    
+
     update_post_meta( $id, 'status', "publish" );
     $id_publish = get_post_meta( $id, 'id_publish', true);
     if ( !isset($id_publish) || $id_publish =="") {
@@ -47,7 +47,7 @@ function publish($id) {
                 'comment_status' => 'closed',
                 'ping_status'    => 'closed',
                 'post_author'    => wp_get_current_user(),
-                'post_name'	     => '',
+                'post_name'         => '',
                 'post_title'     => '',
                 'post_status'    => 'publish',
                 'post_type'      => 'cmap',
@@ -56,15 +56,15 @@ function publish($id) {
         update_post_meta( $id, 'id_publish', $id_publish);
         update_post_meta( $id_publish, 'status', "active");
     }
-    $post_draft = get_post( $id );       
-    $post_publish = get_post( $id_publish );       
+    $post_draft = get_post( $id );
+    $post_publish = get_post( $id_publish );
     $post_publish->post_title = $post_draft->post_title;
     wp_insert_post($post_publish);
     update_post_meta( $id_publish, 'address', get_post_meta( $id, 'address', true) );
     update_post_meta( $id_publish, 'lat', get_post_meta( $id, 'lat', true) );
-    update_post_meta( $id_publish, 'lon', get_post_meta( $id, 'lon', true) ); 
+    update_post_meta( $id_publish, 'lon', get_post_meta( $id, 'lon', true) );
     // TODO custom copy meta
-    
+
     if (isset($_POST["id"])) {
         if ( $_POST["active"] == "1") {
             update_post_meta( $id_publish, 'status', "active" );
@@ -76,39 +76,39 @@ function publish($id) {
 
 function get_delta( $id_new, $wpdb ) {
     $sql = "
-        SELECT * 
+        SELECT *
             FROM $wpdb->posts p
-            WHERE p.post_type='cmap' 
+            WHERE p.post_type='cmap'
               AND p.ID = '$id_new'
         ";
     $post_new = reset($wpdb->get_results( $sql ));
 
     $metas_new = $wpdb->get_results( "
-        SELECT * 
-            FROM $wpdb->postmeta 
+        SELECT *
+            FROM $wpdb->postmeta
             WHERE $wpdb->postmeta.post_id = $id_new
         " );
     $meta_dict_new = get_meta_dict( $metas_new );
-    
-    
+
+
     $id_old = $meta_dict_new["id_publish"];
     if ($id_old > 0) {
         $sql = "
-            SELECT * 
+            SELECT *
                 FROM $wpdb->posts p
-                WHERE p.post_type='cmap' 
+                WHERE p.post_type='cmap'
                   AND p.ID = '$id_old'
             ";
         $post_old = reset($wpdb->get_results( $sql ));
 
         $metas_old = $wpdb->get_results( "
-            SELECT * 
-                FROM $wpdb->postmeta 
+            SELECT *
+                FROM $wpdb->postmeta
                 WHERE $wpdb->postmeta.post_id = $id_old
             " );
         $meta_dict_old = get_meta_dict( $metas_old );
     }
-    
+
     $s = "";
     if ($id_old > 0) {
         if ($meta_dict_new["address"] == $meta_dict_old["address"]) {

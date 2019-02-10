@@ -7,23 +7,23 @@
 
     <title><?php echo get_bloginfo('name'); ?> &#8211; Karteneintrag anpassen</title>
 
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="../cmap-resources/leaflet/leaflet.css" />
-    <script src="../cmap-resources/leaflet/leaflet.js"></script> 
+    <script src="../cmap-resources/leaflet/leaflet.js"></script>
     <script src="../cmap-resources/jquery/jquery-3.3.1.min.js"></script>
 
-	<style>
-		html, body {
-			height: 100%;
-			margin: 0;
-		}
-		#map {
-			width: 100%;
-			height: 100%;
-		}
-	</style>	
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 <body>
     <div id='map'></div>
@@ -35,7 +35,7 @@
         map.attributionControl.setPrefix(false);
 
         L.tileLayer(
-            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
+            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             {
                 subdomains: 'abc',
                 maxZoom: 18,

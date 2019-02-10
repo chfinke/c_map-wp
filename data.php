@@ -6,27 +6,27 @@
         $sql = "
             SELECT *, ms.meta_value AS status, ma.meta_value AS active
                 FROM $wpdb->posts p
-                LEFT OUTER JOIN $wpdb->postmeta ms 
+                LEFT OUTER JOIN $wpdb->postmeta ms
                   ON    ms.post_id = p.ID
                     AND ms.meta_key='status'
-                LEFT OUTER JOIN $wpdb->postmeta mp 
+                LEFT OUTER JOIN $wpdb->postmeta mp
                   ON    mp.post_id = p.ID
                     AND mp.meta_key='id_publish'
-                LEFT OUTER JOIN $wpdb->postmeta ma 
+                LEFT OUTER JOIN $wpdb->postmeta ma
                   ON    ma.post_id = mp.meta_value
                     AND ma.meta_key='status'
-                WHERE p.post_type='cmap' 
+                WHERE p.post_type='cmap'
                   AND p.post_status='draft'
                   AND ms.meta_value in ( 'unconfirmed', 'pending', 'publish' )
             ";
     } else {
         $sql = "
-            SELECT * 
+            SELECT *
                 FROM $wpdb->posts p
-                LEFT OUTER JOIN $wpdb->postmeta ms 
+                LEFT OUTER JOIN $wpdb->postmeta ms
                   ON    ms.post_id = p.ID
                     AND ms.meta_key='status'
-                WHERE p.post_type='cmap' 
+                WHERE p.post_type='cmap'
                   AND p.post_status='publish'
                   AND ms.meta_value = 'active'
             ";
@@ -41,12 +41,12 @@
     foreach ( $posts as $post ) {
         $cnt--;
         $metas = $wpdb->get_results( "
-            SELECT * 
-                FROM $wpdb->postmeta 
+            SELECT *
+                FROM $wpdb->postmeta
                 WHERE $wpdb->postmeta.post_id = $post->ID
             " );
         $meta_dict = get_meta_dict( $metas );
-                
+
         echo "    {\n";
         echo "      \"geometry\": {\n";
         echo "        \"type\": \"Point\",\n";

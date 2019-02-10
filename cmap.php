@@ -16,7 +16,7 @@ Text Domain: chfinke
 
 
 function register_cpt_cmap() {
- 
+
     $labels = array(
         'name' => _x( 'c*map', 'cmap' ),
         'singular_name' => _x( 'c*map', 'cmap' ),
@@ -31,7 +31,7 @@ function register_cpt_cmap() {
         'parent_item_colon' => _x( 'Parent Item:', 'cmap' ),
         'menu_name' => _x( 'c*map', 'cmap' ),
     );
- 
+
     $args = array(
         'labels' => $labels,
         'hierarchical' => true,
@@ -52,7 +52,7 @@ function register_cpt_cmap() {
         'rewrite' => true,
         'capability_type' => 'post'
     );
- 
+
     register_post_type( 'cmap', $args );
 }
 
@@ -60,23 +60,23 @@ add_action( 'init', 'register_cpt_cmap' );
 
 
 function cmap_plu_activate() {
-	cmap_plu_rewrite();
-	flush_rewrite_rules();
+    cmap_plu_rewrite();
+    flush_rewrite_rules();
 }
 
 register_activation_hook( __FILE__, 'cmap_plu_activate' );
 
 function cmap_plu_deactivate() {
-	flush_rewrite_rules();
+    flush_rewrite_rules();
 }
 
 register_deactivation_hook( __FILE__, 'cmap_plu_deactivate' );
 
 function cmap_plu_rewrite() {
     add_rewrite_rule( 'cmap/?$', 'wp-content/plugins/cmap/map.php', 'top' );
-	add_rewrite_rule( 'cmap/data.json/?$', 'wp-content/plugins/cmap/data.php', 'top' );
-	add_rewrite_rule( 'cmap/functions/?$', 'wp-content/plugins/cmap/functions.php', 'top' );
-	add_rewrite_rule( 'cmap/edit/?$', 'wp-content/plugins/cmap/edit.php', 'top' );
+    add_rewrite_rule( 'cmap/data.json/?$', 'wp-content/plugins/cmap/data.php', 'top' );
+    add_rewrite_rule( 'cmap/functions/?$', 'wp-content/plugins/cmap/functions.php', 'top' );
+    add_rewrite_rule( 'cmap/edit/?$', 'wp-content/plugins/cmap/edit.php', 'top' );
     add_rewrite_rule( 'cmap/edit_map/?$', 'wp-content/plugins/cmap/edit_map.php', 'top' );
     add_rewrite_rule( 'cmap/list/?$', 'wp-content/plugins/cmap/list.php', 'top' );
 }
