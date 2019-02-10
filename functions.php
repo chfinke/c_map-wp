@@ -21,7 +21,18 @@
 <?php        
         $id = $_GET["id"];
 
-        if ( user_is_moderator() && get_post_meta( $id, 'status', true) == "pending" ) {
+        if ( !user_is_moderator() ) {
+?>
+    <p>Zugangsdaten falsch oder abgelaufen</p>
+<?php
+        } elseif get_post_meta( $id, 'status', true) != "pending" ) {
+        
+?>
+    <p>Bereits bestätigt</p>
+        
+    <input type="button" value="Zurück" onclick="document.location.href='<?php echo get_bloginfo('wpurl'); ?>/cmap/';"/>
+<?php
+        } else {
             publish($id);
 ?>
     <p>Erfolgreich bestätigt</p>
@@ -29,9 +40,8 @@
     <input type="button" value="Zurück" onclick="document.location.href='<?php echo get_bloginfo('wpurl'); ?>/cmap/';"/>
     
 <?php
-        } else {
-            echo "Falsche Zugangsdaten oder Status";
         }
+        
     } elseif ( $action == 'save') {
         // functions?action=save
 
@@ -40,11 +50,14 @@
             $status = 'create';
         } else {
             $status = 'edit';
-        }    
-        
+        }
         $token = $_POST["token"];
-        if ( (isset($status)&&$status == 'create') || user_is_moderator() || ( check_token($id, $token) && get_post_meta( $id, 'status', true) != "unconfirmed" ) ) {
         
+        if ( !((isset($status)&&$status == 'create')) && !user_is_moderator() && !check_token($id, $token) ) { 
+?>
+    <p>Zugangsdaten falsch oder abgelaufen</p>
+<?php
+        } else {
             if ( $status == 'create' ) {
                 $id = wp_insert_post(
                     array(
@@ -57,7 +70,6 @@
                         'post_type'      => 'cmap',
                     )
                 );
-                // TODO custom create post
             } else {
                 $post = get_post( $id );       
                 $post->post_title = $_POST["title"];
@@ -71,8 +83,6 @@
             if (!user_is_moderator()) {
                 update_post_meta( $id, 'status', "pending" );
             }
-            
-            // TODO custom save meta
             
             if ( $status == 'create' ) {
                 update_post_meta( $id, 'email', $_POST["email"] );
@@ -103,16 +113,14 @@
                     }
                 }
 ?>
+    <h2 class="page-title">Karteneintrag bearbeiten</h2>
     <p>Eintrag geändert</p>
     <input type="button" value="anzeigen" onclick="window.location.href='<?php echo get_bloginfo('wpurl'); ?>/cmap/'"/>
     <input type="button" value="Zurück" onclick="window.history.go(-1);"/>
 <?php
             }
-        } else {
-?>
-    Falsche Zugangsdaten oder Status
-<?php
         }
+        
     } elseif ( $action == 'confirm') {
         // functions?action=confirm
 ?>
@@ -120,18 +128,27 @@
 <?php    
         $id = $_GET["id"];
         $token = $_GET["token"];
-
-        if ( check_token($id, $token) && get_post_meta( $id, 'status', true) == "unconfirmed" ) {
+        
+        if ( !check_token($id, $token) ) {
+?>
+        <p>Zugangsdaten falsch oder abgelaufen</p>
+<?php
+            echo "Zugangsdaten falsch oder abgelaufen";
+        } elseif ( get_post_meta( $id, 'status', true) != "unconfirmed" ) {
+?>
+        <p>Eintrag bereits bestätigt</p>
+        
+        <input type="button" value="bearbeiten" onclick="window.location.href='<?php echo get_bloginfo('wpurl'); ?>/cmap/edit?id=<?php echo $id; ?>&token=<?php echo $token; ?>'"/>
+<?php            
+        } else {
             update_post_meta( $id, 'status', "pending" );
 ?>
         <p>Erfolgreich bestätigt</p>
         
         <input type="button" value="bearbeiten" onclick="window.location.href='<?php echo get_bloginfo('wpurl'); ?>/cmap/edit?id=<?php echo $id; ?>&token=<?php echo $token; ?>'"/>
-        <input type="button" value="anzeigen" onclick="window.location.href='<?php echo get_bloginfo('wpurl'); ?>/cmap/'"/>
 <?php
-        } else {
-            echo "Falsche Zugangsdaten oder Status";
         }
+
     } elseif ( $action == 'delete') {
         // functions?action=delete
 ?>
@@ -140,13 +157,16 @@
         $id = $_GET['id'];
         $token = $_GET["token"];
         
-        if ( check_token($id, $token) || user_is_moderator()) {
-            
+        if ( !user_is_moderator() && !check_token($id, $token) ) {
+?>
+        <p>Zugangsdaten falsch oder abgelaufen</p>
+<?php
+        } else {          
             if (isset($_GET['confirmed'])) {
                 wp_delete_post( get_post_meta($id,"id_publish",true), true );
                 wp_delete_post( $id, true );
 ?>
-    Eintrag gelöscht
+    <p>Eintrag gelöscht</p>
 <?php
             } else {
 ?>
@@ -156,10 +176,6 @@
     <input type="button" value="Zurück" onclick="window.history.go(-1);"/>
 <?php
             }
-        } else {
-?>
-    Falsche Zugangsdaten
-<?php
         }
     }
     

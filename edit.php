@@ -70,6 +70,7 @@
     <input type="button" value="Zurück" onclick="window.history.go(-2);"/>
 <?php
         }
+        
     } elseif (isset($id) || $action == 'new') {
         // edit?id=123
         // edit?action=new
@@ -96,7 +97,19 @@
             $lon = '0';
         }
 
-        if ( (isset($status)&&$status == 'create') || user_is_moderator() || ( check_token($id, $token) && get_post_meta( $id, 'status', true) != "unconfirmed" ) ) {
+        if (!is_editable()) {
+?>
+    <p><?php echo get_option('cmap_note_uneditable'); ?></p>
+<?php
+        } elseif ( !((isset($status)&&$status == 'create')) && !user_is_moderator() && !check_token($id, $token) ) {
+?>
+    <p>Zugangsdaten falsch oder abgelaufen</p>
+<?php
+        } else {
+            if (get_post_meta( $id, 'status', true) == "unconfirmed") {
+                // edit counts as confirmation
+                update_post_meta( $id, 'status', "pending" );
+            }
 ?>
     <form name="data" method="POST" onsubmit="return form_validation()" action="<?php echo get_bloginfo('wpurl'); ?>/cmap/functions?action=save">
         <input type="hidden" name="id" value="<?php echo $id ?>">
@@ -166,9 +179,12 @@
 <?php
                 }
             }
+            if( user_is_moderator()) {
 ?>
         <input type="button" value="Zurück" onclick="window.history.back();"/>
-        
+<?php
+            }
+?>
     </form>
   
     <script src="../cmap-resources/jquery/jquery-3.3.1.min.js"></script>
@@ -182,10 +198,6 @@
         function form_validation() {            
         }
     </script>
-<?php
-        } else {
-?>
-    Falsche Zugangsdaten oder Status
 <?php
         }
     }
