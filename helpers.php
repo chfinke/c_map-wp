@@ -35,7 +35,7 @@ function user_is_moderator() {
 }
 
 function publish($id) {
-    if ( !user_is_moderator() || get_post_meta( $id, 'status', true) != "pending" ) {
+    if ( !user_is_moderator() ) {
         exit();
     }
 

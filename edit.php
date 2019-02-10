@@ -146,15 +146,23 @@
          <input type="checkbox" name="publish" value="1">Eintrag veröffentlichen<br>
 <?php
                 }
-                $publish_status = get_post_meta(get_post_meta($id,"id_publish",true),"status",true);
-                if( $publish_status == "active" ) {
+
+                $id_publish = get_post_meta( $id, 'id_publish', true);
+                if ( !isset($id_publish) || $id_publish =="") {
+?>
+         <input type="hidden" name="active" value="1">
+<?php
+                } else {
+                    $publish_status = get_post_meta(get_post_meta($id,"id_publish",true),"status",true);
+                    if( $publish_status == "active" ) {
 ?>
          <input type="checkbox" name="active" value="1" checked>Eintrag anzeigen<br>
 <?php
-                } else {
+                    } else {
 ?>
          <input type="checkbox" name="active" value="1">Eintrag anzeigen<br>
 <?php
+                    }
                 }
 ?>
         <br/>

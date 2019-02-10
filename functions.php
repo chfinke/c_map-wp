@@ -25,7 +25,7 @@
 ?>
     <p>Zugangsdaten falsch oder abgelaufen</p>
 <?php
-        } elseif get_post_meta( $id, 'status', true) != "pending" ) {
+        } elseif ( get_post_meta( $id, 'status', true) != "pending" ) {
 
 ?>
     <p>Bereits bestätigt</p>
