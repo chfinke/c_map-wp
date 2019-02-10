@@ -7,7 +7,7 @@
 Plugin Name: c*map
 Plugin URI: https://github.com/chfinke/cmap-wp
 Description: Generate a crowdsourced/cooperative map
-Version: 0.0.2
+Version: 0.0.3
 Author: Christoph Finke
 Author URI: https://chfinke.github.io/
 License: GPLv2 or later
