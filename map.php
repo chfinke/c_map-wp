@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../cmap-resources/fontawesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="../cmap-resources/leaflet.awesome-markers/leaflet.awesome-markers.css" />
     <link rel="stylesheet" href="../cmap-resources/leaflet.EasyButton/easy-button.css" />
-    <script src="../cmap-resources/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../cmap-resources/jquery/jquery.min.js"></script>
     <script src="../cmap-resources/leaflet/leaflet.js"></script>
     <script src="../cmap-resources/leaflet.awesome-markers/leaflet.awesome-markers.min.js"></script>
     <script src="../cmap-resources/leaflet.EasyButton/easy-button.js"></script>

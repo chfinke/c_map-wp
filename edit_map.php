@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" href="../cmap-resources/leaflet/leaflet.css" />
     <script src="../cmap-resources/leaflet/leaflet.js"></script>
-    <script src="../cmap-resources/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../cmap-resources/jquery/jquery.min.js"></script>
 
     <style>
         html, body {

@@ -195,7 +195,7 @@
 ?>
     </form>
 
-    <script src="../cmap-resources/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../cmap-resources/jquery/jquery.min.js"></script>
 
     <script type="text/javascript">
         window.onmessage = function(e){
