@@ -120,7 +120,7 @@ if (user_is_moderator()) {
             document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/cmap/list'
         }).addTo(map);
 <?php
-    } else {
+    }
 ?>
         L.easyButton( 'fa-pencil', function(){
             document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/cmap/edit'
@@ -128,9 +128,6 @@ if (user_is_moderator()) {
         L.easyButton( 'fa-plus-square', function(){
             document.location.href = '<?php echo get_bloginfo('wpurl'); ?>/cmap/edit?action=new'
         }).addTo(map);
-<?php
-    }
-?>
     </script>
 </body>
 </html>
